@@ -2,10 +2,58 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
 }
 
 datasource db {
-  provider = "mysql"
-  url      = env("DATABASE_URL")
+  provider             = "mysql"
+  url                  = env("DATABASE_URL")
+  relationMode         = "prisma"
+}
+
+model Book {
+  id          Int      @id
+  title       String
+  author      String
+  description String?
+  image       String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  UserBook    UserBook[]
+  Reviews     Review[]
+}
+
+enum BookStatuses {
+  WANT_TO_READ
+  CURRENTLY_READING
+  FINISHED_READING
+}
+
+model UserBook {
+  id        Int         @id @default(autoincrement())
+  username  String      
+
+  bookId    Int
+  Book      Book        @relation(fields: [bookId], references: [id])
+
+  status    BookStatuses
+
+  @@index([username])
+  @@index([bookId])
+}
+
+model Review {
+  id        Int      @id @default(autoincrement())
+  username  String
+
+  bookId    Int
+  Book      Book     @relation(fields: [bookId], references: [id])
+
+  rating    String
+  comment   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([username])
+  @@index([bookId])
 }
