@@ -1,4 +1,5 @@
 import axios from 'axios';
+import Image from 'next/image';
 
 const getData = async (query: string, page: number) => {
   const data = await axios.get(
@@ -49,6 +50,7 @@ const bookList = async ({ params }: BookListProps) => {
       {books.map((book: bookData) => (
         <div key={book.isbn}>
           <h1>{book.title}</h1>
+          <img src={book.image} className="w-16" />
         </div>
       ))}
     </div>
