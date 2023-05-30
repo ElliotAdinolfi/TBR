@@ -9,7 +9,6 @@ import {
   SignInButton,
   UserButton,
 } from '@clerk/nextjs';
-import { Sign } from 'crypto';
 
 const inter = Inter({ subsets: ['latin'] });
 
