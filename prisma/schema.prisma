@@ -51,9 +51,26 @@ model Review {
 
   rating    String
   comment   String
+
+  likes     Int      @default(0)
+  reports   Int      @default(0)
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  reviewLikes ReviewLike[]
+
   @@index([username])
   @@index([bookId])
+}
+
+model ReviewLike {
+  id        Int      @id @default(autoincrement())
+  username  String
+  reviewId  Int
+  Review    Review   @relation(fields: [reviewId], references: [id])
+
+  @@index([username])
+  @@index([reviewId])
+  @@unique([username, reviewId])
 }
