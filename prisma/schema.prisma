@@ -32,14 +32,14 @@ enum BookStatuses {
 
 model UserBook {
   id        Int         @id @default(autoincrement())
-  username  String      
+  userId    String      
 
   bookId    Int
   Book      Book        @relation(fields: [bookId], references: [id])
 
   status    BookStatuses
 
-  @@index([username])
+  @@index([userId])
   @@index([bookId])
 }
 
@@ -54,7 +54,7 @@ enum BookRatings {
 
 model Review {
   id        Int      @id @default(autoincrement())
-  username  String
+  userId    String
 
   bookId    Int
   Book      Book     @relation(fields: [bookId], references: [id])
@@ -70,18 +70,18 @@ model Review {
 
   reviewLikes ReviewLike[]
 
-  @@index([username])
+  @@index([userId])
   @@index([bookId])
 }
 
 model ReviewLike {
   id        Int      @id @default(autoincrement())
-  username  String
+  userId    String
   reviewId  Int
   count     Int      @default(1)
   Review    Review   @relation(fields: [reviewId], references: [id])
 
-  @@index([username])
+  @@index([userId])
   @@index([reviewId])
-  @@unique([username, reviewId])
+  @@unique([userId, reviewId])
 }

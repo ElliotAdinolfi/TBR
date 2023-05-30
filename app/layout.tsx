@@ -1,6 +1,15 @@
 import './globals.css';
 import { Inter } from 'next/font/google';
-import { ClerkProvider } from '@clerk/nextjs';
+import Link from 'next/link';
+
+import {
+  ClerkProvider,
+  SignedIn,
+  SignedOut,
+  SignInButton,
+  UserButton,
+} from '@clerk/nextjs';
+import { Sign } from 'crypto';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -18,8 +27,31 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
-        <body className={inter.className}>{children}</body>
+        <body className={inter.className}>
+          <Navbar />
+          {children}
+        </body>
       </html>
     </ClerkProvider>
   );
 }
+
+const Navbar = () => {
+  return (
+    <div className="w-screen h-12 flex bg-orange-300 shadow-lg">
+      <div className="flex w-1/2 p-2 text-2xl font-bold">
+        <Link href="/">
+          <h1>TBR</h1>
+        </Link>
+      </div>
+      <div className="flex w-1/2 p-2 justify-end">
+        <SignedIn>
+          <UserButton />
+        </SignedIn>
+        <SignedOut>
+          <SignInButton />
+        </SignedOut>
+      </div>
+    </div>
+  );
+};
