@@ -27,6 +27,7 @@ enum BookStatuses {
   WANT_TO_READ
   CURRENTLY_READING
   FINISHED_READING
+  COULDNT_FINISH
 }
 
 model UserBook {
@@ -42,6 +43,15 @@ model UserBook {
   @@index([bookId])
 }
 
+enum BookRatings {
+  COULDNT_FINISH
+  BAD
+  DECENT
+  GOOD
+  LOVED_IT
+  FLAWLESS
+}
+
 model Review {
   id        Int      @id @default(autoincrement())
   username  String
@@ -49,7 +59,7 @@ model Review {
   bookId    Int
   Book      Book     @relation(fields: [bookId], references: [id])
 
-  rating    String
+  rating    BookRatings
   comment   String
 
   likes     Int      @default(0)
