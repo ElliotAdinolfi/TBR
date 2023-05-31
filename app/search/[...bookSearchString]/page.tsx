@@ -57,7 +57,7 @@ const bookList = async ({ params }: BookListProps) => {
       {books.map((book: bookData) => (
         <div
           key={book.isbn}
-          className="flex w-1/3 justify-between items-center py-4 border-solid rounded-md border-2 border-gray-200 my-4 px-4"
+          className="flex w-1/3 justify-between items-center py-4 border-solid rounded-md border-2 border-gray-200 my-6 px-4"
         >
           <img src={book.image} className="w-16" />
           <h1>{book.title}</h1>
