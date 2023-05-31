@@ -1,5 +1,6 @@
 import axios from 'axios';
 import Image from 'next/image';
+import Link from 'next/link';
 
 import {
   ChevronLeftIcon,
@@ -56,14 +57,64 @@ const bookList = async ({ params }: BookListProps) => {
       {books.map((book: bookData) => (
         <div
           key={book.isbn}
-          className="flex w-1/2 justify-between items-center"
+          className="flex w-1/3 justify-between items-center py-4"
         >
           <img src={book.image} className="w-16" />
           <h1>{book.title}</h1>
         </div>
       ))}
+      <Pagination totalResults={total} page={page} query={query} />
     </div>
   );
 };
+
+function Pagination({
+  totalResults,
+  page,
+  query,
+}: {
+  totalResults: number;
+  page: number;
+  query: string;
+}) {
+  const prevPage = `/search/${query}/${Number(page) - 1}`;
+  const nextPage = `/search/${query}/${Number(page) + 1}`;
+
+  return (
+    <nav
+      id="pagination"
+      className="flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6"
+      aria-label="Pagination"
+    >
+      <div className="hidden sm:block mr-8">
+        <p className="text-sm text-gray-700">
+          Showing{' '}
+          <span className="font-medium">{Number(page) * 10 - 9}</span>{' '}
+          to <span className="font-medium">{Number(page) * 10}</span>{' '}
+          of <span className="font-medium">{totalResults}</span>{' '}
+          results
+        </p>
+      </div>
+      <div className="flex flex-1 justify-between sm:justify-end">
+        {Number(page) - 1 > 0 && (
+          <Link
+            href={prevPage}
+            className="relative inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus-visible:outline-offset-0"
+          >
+            Previous
+          </Link>
+        )}
+        {Number(page) < totalResults / 10 && (
+          <Link
+            href={nextPage}
+            className="relative ml-3 inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus-visible:outline-offset-0"
+          >
+            Next
+          </Link>
+        )}
+      </div>
+    </nav>
+  );
+}
 
 export default bookList;
