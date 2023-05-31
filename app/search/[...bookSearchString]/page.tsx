@@ -1,6 +1,11 @@
 import axios from 'axios';
 import Image from 'next/image';
 
+import {
+  ChevronLeftIcon,
+  ChevronRightIcon,
+} from '@heroicons/react/20/solid';
+
 const getData = async (query: string, page: number) => {
   const data = await axios.get(
     `https://api2.isbndb.com/books/${query}?page=${
@@ -12,7 +17,10 @@ const getData = async (query: string, page: number) => {
       },
     }
   );
-  return data.data.books;
+  return {
+    books: data.data.books,
+    total: data.data.total,
+  };
 };
 
 interface bookData {
@@ -39,18 +47,19 @@ interface BookListProps {
 }
 
 const bookList = async ({ params }: BookListProps) => {
-  console.log(params);
-  const books = await getData(
-    params.bookSearchString[0],
-    params.bookSearchString[1]
-  );
+  const [query, page] = params.bookSearchString;
+
+  const { books, total } = await getData(query, page);
   return (
-    <div>
+    <div className="w-screen flex flex-col items-center">
       <h1>Book List</h1>
       {books.map((book: bookData) => (
-        <div key={book.isbn}>
-          <h1>{book.title}</h1>
+        <div
+          key={book.isbn}
+          className="flex w-1/2 justify-between items-center"
+        >
           <img src={book.image} className="w-16" />
+          <h1>{book.title}</h1>
         </div>
       ))}
     </div>
