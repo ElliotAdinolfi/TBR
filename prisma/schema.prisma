@@ -16,7 +16,14 @@ model Book {
   title       String
   author      String
   description String?
-  image       String?
+  image       String
+
+  reading     Int      @default(0)
+  read        Int      @default(0)
+  wantToRead  Int      @default(0)
+
+  avgRating   Float    @default(-1)
+
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   UserBook    UserBook[]
@@ -43,15 +50,6 @@ model UserBook {
   @@index([bookId])
 }
 
-enum BookRatings {
-  COULDNT_FINISH
-  BAD
-  DECENT
-  GOOD
-  LOVED_IT
-  FLAWLESS
-}
-
 model Review {
   id        Int      @id @default(autoincrement())
   userId    String
@@ -59,7 +57,7 @@ model Review {
   bookId    Int
   Book      Book     @relation(fields: [bookId], references: [id])
 
-  rating    BookRatings
+  rating    Int
   comment   String
 
   likes     Int      @default(0)
