@@ -8,7 +8,7 @@ const getData = async (query: string, page: number) => {
   const data = await axios.get(
     `https://api2.isbndb.com/books/${query}?page=${
       page ? page : 1
-    }&pageSize=10`,
+    }&pageSize=30`,
     {
       headers: {
         Authorization: process.env.ISBN_DB_KEY,
@@ -58,28 +58,36 @@ const bookList = async ({ params }: BookListProps) => {
           .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
           .join(' ')}
       </h1>
-      {books.map((book: bookData) => (
-        <Link
-          href={`/search/book/${book.isbn13}/true`}
-          key={book.isbn}
-          className="flex lg:w-1/3 justify-between items-center py-4 border-solid rounded-md border-2 border-gray-200 my-4  px-4 shadow-md"
-        >
-          <img src={book.image} className="w-20" />
-          <div className="text-right">
-            <h1 className="font-bold">
-              {book.title.length < 40
-                ? book.title
-                : book.title.slice(0, 40) + '...'}
-            </h1>
-            <p>By {...book.authors}</p>
-          </div>
-          <ArrowLongRightIcon
-            className="ml-3 h-5 w-5 text-gray-400"
-            aria-hidden="true"
-          />
-        </Link>
-      ))}
-      <Pagination totalResults={total} page={page} query={query} />
+      {books
+        .filter(
+          (item: any, index: any, self: any) =>
+            index ===
+            self.findIndex(
+              (i: any) => i.authors[0] === item.authors[0]
+            )
+        )
+        .map((book: bookData) => (
+          <Link
+            href={`/search/book/${book.isbn13}/true`}
+            key={book.isbn}
+            className="flex lg:w-1/2 max-w-3xl justify-between items-center py-4 border-solid rounded-md border-2 border-gray-200 my-4  px-4 shadow-md"
+          >
+            <img src={book.image} className="w-20" />
+            <div className="text-right">
+              <h1 className="font-bold">
+                {book.title.length < 40
+                  ? book.title
+                  : book.title.slice(0, 40) + '...'}
+              </h1>
+              <p>By {...book.authors}</p>
+            </div>
+            <ArrowLongRightIcon
+              className="ml-3 h-5 w-5 text-gray-400"
+              aria-hidden="true"
+            />
+          </Link>
+        ))}
+      {/* <Pagination totalResults={total} page={page} query={query} /> */}
     </div>
   );
 };
