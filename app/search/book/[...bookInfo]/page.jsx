@@ -40,12 +40,6 @@ const getData = async (isbn, addtoDB) => {
   return book;
 };
 
-// interface BookInfoProps {
-//   params: {
-//     bookInfo: [string, string];
-//   };
-// }
-
 const BookInfo = async ({ params }) => {
   const [bookISBN, addtoDB] = params.bookInfo;
   const bookData = await getData(bookISBN, addtoDB);

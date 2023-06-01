@@ -1,6 +1,7 @@
 import './globals.css';
 import { Inter } from 'next/font/google';
 import Link from 'next/link';
+import SearchBar from '@/components/home/searchBar';
 
 import {
   ClerkProvider,
@@ -42,6 +43,9 @@ const Navbar = () => {
         <Link href="/">
           <h1>TBR</h1>
         </Link>
+      </div>
+      <div className="w-1/3">
+        <SearchBar />
       </div>
       <div className="flex w-1/2 p-2 justify-end">
         <SignedIn>

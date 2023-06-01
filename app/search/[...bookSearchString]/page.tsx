@@ -2,10 +2,7 @@ import axios from 'axios';
 import Image from 'next/image';
 import Link from 'next/link';
 
-import {
-  ChevronLeftIcon,
-  ChevronRightIcon,
-} from '@heroicons/react/20/solid';
+import { ArrowLongRightIcon } from '@heroicons/react/20/solid';
 
 const getData = async (query: string, page: number) => {
   const data = await axios.get(
@@ -53,15 +50,33 @@ const bookList = async ({ params }: BookListProps) => {
   const { books, total } = await getData(query, page);
   return (
     <div className="w-screen flex flex-col items-center my-8">
-      <h1>Book List</h1>
+      <h1 className="font-bold text-2xl py-8">
+        Results for{' '}
+        {query
+          .replaceAll('%20', ' ')
+          .split(' ')
+          .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
+          .join(' ')}
+      </h1>
       {books.map((book: bookData) => (
         <Link
           href={`/search/book/${book.isbn13}/true`}
           key={book.isbn}
-          className="flex w-1/3 justify-between items-center py-4 border-solid rounded-md border-2 border-gray-200 my-6 px-4"
+          className="flex w-1/3 justify-between items-center py-4 border-solid rounded-md border-2 border-gray-200 my-4  px-4 shadow-md"
         >
-          <img src={book.image} className="w-16" />
-          <h1>{book.title}</h1>
+          <img src={book.image} className="w-20" />
+          <div className="text-right">
+            <h1 className="font-bold">
+              {book.title.length < 40
+                ? book.title
+                : book.title.slice(0, 40) + '...'}
+            </h1>
+            <p>By {...book.authors}</p>
+          </div>
+          <ArrowLongRightIcon
+            className="ml-3 h-5 w-5 text-gray-400"
+            aria-hidden="true"
+          />
         </Link>
       ))}
       <Pagination totalResults={total} page={page} query={query} />
