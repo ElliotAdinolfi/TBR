@@ -50,7 +50,7 @@ const bookList = async ({ params }: BookListProps) => {
   const { books, total } = await getData(query, page);
   return (
     <div className="w-screen flex flex-col items-center my-8">
-      <h1 className="font-bold text-2xl py-8">
+      <h1 className="font-bold text-center text-2xl py-8">
         Results for{' '}
         {query
           .replaceAll('%20', ' ')
@@ -62,7 +62,7 @@ const bookList = async ({ params }: BookListProps) => {
         <Link
           href={`/search/book/${book.isbn13}/true`}
           key={book.isbn}
-          className="flex w-1/3 justify-between items-center py-4 border-solid rounded-md border-2 border-gray-200 my-4  px-4 shadow-md"
+          className="flex lg:w-1/3 justify-between items-center py-4 border-solid rounded-md border-2 border-gray-200 my-4  px-4 shadow-md"
         >
           <img src={book.image} className="w-20" />
           <div className="text-right">
