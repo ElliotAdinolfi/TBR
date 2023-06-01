@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { db } from '@/lib/db';
 
-const getData = async (isbn: string, addtoDB: string) => {
+const getData = async (isbn, addtoDB) => {
   if (addtoDB === 'true') {
     const isInDB = await db.book.findFirst({
       where: {
@@ -27,7 +27,7 @@ const getData = async (isbn: string, addtoDB: string) => {
           },
         });
         return created;
-      } catch (e: any) {
+      } catch (e) {
         return null;
       }
     }
@@ -40,13 +40,13 @@ const getData = async (isbn: string, addtoDB: string) => {
   return book;
 };
 
-interface BookInfoProps {
-  params: {
-    bookInfo: [string, string];
-  };
-}
+// interface BookInfoProps {
+//   params: {
+//     bookInfo: [string, string];
+//   };
+// }
 
-const BookInfo = async ({ params }: BookInfoProps) => {
+const BookInfo = async ({ params }) => {
   const [bookISBN, addtoDB] = params.bookInfo;
   const bookData = await getData(bookISBN, addtoDB);
   console.log(bookData);
@@ -57,7 +57,7 @@ const BookInfo = async ({ params }: BookInfoProps) => {
         <div className="flex w-1/3 justify-between items-center py-4 border-solid rounded-md border-2 border-gray-200 my-6 px-4">
           <h1>{bookData.title}</h1>
           <img
-            src={bookData.image!}
+            src={bookData.image}
             alt={`Image of the book cover for ${bookData.title}`}
             className="w-16"
           />
