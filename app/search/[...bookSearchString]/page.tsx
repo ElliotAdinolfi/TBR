@@ -1,6 +1,7 @@
 import axios from 'axios';
 import Image from 'next/image';
 import Link from 'next/link';
+import similarity from '@/lib/similarity';
 
 import { ArrowLongRightIcon } from '@heroicons/react/20/solid';
 
@@ -63,7 +64,9 @@ const bookList = async ({ params }: BookListProps) => {
           (item: any, index: any, self: any) =>
             index ===
             self.findIndex(
-              (i: any) => i.authors[0] === item.authors[0]
+              (i: any) =>
+                i.authors[0] === item.authors[0] &&
+                similarity(i.title, item.title) > 0.5
             )
         )
         .map((book: bookData) => (
