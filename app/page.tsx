@@ -1,8 +1,6 @@
 import Image from 'next/image';
 import { currentUser } from '@clerk/nextjs';
 
-import SearchBar from '@/components/home/searchBar';
-
 export default async function Home() {
   const user = await currentUser();
   return (
