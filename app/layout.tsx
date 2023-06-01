@@ -38,7 +38,7 @@ export default function RootLayout({
 
 const Navbar = () => {
   return (
-    <div className="w-screen h-12 flex bg-orange-300 shadow-lg">
+    <div className="w-screen h-12 flex bg-orange-300 shadow-lg lg:px-16">
       <div className="flex w-1/2 p-2 text-2xl font-bold">
         <Link href="/">
           <h1>TBR</h1>
