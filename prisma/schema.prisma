@@ -12,11 +12,11 @@ datasource db {
 }
 
 model Book {
-  id          Int      @id
+  id          Int      @id @default(autoincrement())
+  isbn        String   @unique
   title       String
-  author      String
-  description String?
-  image       String
+  image       String?
+  author      String?
 
   reading     Int      @default(0)
   read        Int      @default(0)
