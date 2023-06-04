@@ -22,8 +22,13 @@ const getData = async (isbn, addtoDB) => {
           data: {
             isbn: book.data.book.isbn13,
             title: book.data.book.title,
+            trimmedTitle: book.data.book.title.replace(
+              /[^a-zA-Z0-9]/g,
+              ''
+            ),
             image: book.data.book.image,
             author: book.data.book.authors[0],
+            description: book.data.book.synopsis,
           },
         });
         return created;
@@ -46,15 +51,43 @@ const BookInfo = async ({ params }) => {
   console.log(bookData);
   return (
     <div className="w-screen flex flex-col items-center my-8">
-      <h1>Book Info</h1>
       {bookData !== null ? (
-        <div className="flex w-1/3 justify-between items-center py-4 border-solid rounded-md border-2 border-gray-200 my-6 px-4">
-          <h1>{bookData.title}</h1>
-          <img
-            src={bookData.image}
-            alt={`Image of the book cover for ${bookData.title}`}
-            className="w-16"
-          />
+        <div className="flex min-w-1/2 max-w-6xl justify-between items-center py-4 my-6 px-4">
+          <div className="w-1/2 flex justify-normal-end flex-col">
+            <img
+              src={bookData.image}
+              alt={`Image of the book cover for ${bookData.title}`}
+              className="w-16 shadow-md rounded-sm w-20 h-30 my-2"
+            />
+            <h1 className="font-bold text-3xl my-2">
+              {bookData.title}
+            </h1>
+            <p className="text-xl my-2">{bookData.author}</p>
+            <hr />
+            <div className="flex ">
+              <p className="my-4 flex- flex-row">
+                <span className="text-lg font-bold">
+                  {bookData.read}
+                </span>{' '}
+                readers have finished |{' '}
+                <span className="text-lg font-bold">
+                  {bookData.reading}
+                </span>{' '}
+                are reading |{' '}
+                <span className="text-lg font-bold">
+                  {bookData.reading}
+                </span>{' '}
+                want to read
+              </p>
+            </div>
+            <hr />
+            <p className="my-4">
+              {bookData.description.length < 500
+                ? bookData.description
+                : bookData.description.substring(0, 500) + '...'}
+            </p>
+          </div>
+          <div></div>
         </div>
       ) : null}
     </div>
