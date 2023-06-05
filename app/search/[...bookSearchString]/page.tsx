@@ -73,7 +73,7 @@ const bookList = async ({ params }: BookListProps) => {
           <Link
             href={`/search/book/${book.isbn13}/true`}
             key={book.isbn}
-            className="flex lg:w-1/2 max-w-3xl justify-between items-center py-4 border-solid rounded-md border-2 border-gray-200 my-4  px-4 shadow-md"
+            className="flex lg:w-1/2 max-sm:w-screen max-w-3xl justify-between items-center py-4 border-solid max-sm:border-x-0 rounded-md border-2 border-gray-200 my-4  px-4 shadow-md"
           >
             <img src={book.image} className="w-20" />
             <div className="text-right">

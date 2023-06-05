@@ -52,8 +52,8 @@ const BookInfo = async ({ params }) => {
   return (
     <div className="w-screen flex flex-col items-center my-8">
       {bookData !== null ? (
-        <div className="flex min-w-1/2 max-w-6xl justify-between items-center py-4 my-6 px-4">
-          <div className="w-1/2 flex justify-normal-end flex-col">
+        <div className="flex min-w-1/2 max-w-6xl justify-between items-center py-4 my-6 px-4 max-sm:flex-col">
+          <div className="w-1/2 flex justify-normal-end flex-col max-sm:w-screen p-6">
             <img
               src={bookData.image}
               alt={`Image of the book cover for ${bookData.title}`}
@@ -83,9 +83,9 @@ const BookInfo = async ({ params }) => {
             <hr />
             <p className="my-4">
               {bookData.description !== null
-                ? bookData.description.length < 500
+                ? bookData.description.length < 200
                   ? bookData.description
-                  : bookData.description.substring(0, 500) + '...'
+                  : bookData.description.substring(0, 200) + '...'
                 : null}
             </p>
           </div>
