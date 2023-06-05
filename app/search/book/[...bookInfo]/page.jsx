@@ -1,6 +1,8 @@
 import axios from 'axios';
 import { db } from '@/lib/db';
 
+import ChangeStatus from '@/components/bookStatus/changeStatus';
+
 const getData = async (isbn, addtoDB) => {
   if (addtoDB === 'true') {
     const isInDB = await db.book.findFirst({
@@ -89,7 +91,7 @@ const BookInfo = async ({ params }) => {
                 : null}
             </p>
           </div>
-          <div></div>
+          <ChangeStatus readingStatus={'HAVENT_READ'} />
         </div>
       ) : null}
     </div>
