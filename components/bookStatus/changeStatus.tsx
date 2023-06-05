@@ -7,13 +7,6 @@ interface ChangeStatusProps {
   readingStatus: string;
 }
 
-// enum BookStatuses {
-//   WANT_TO_READ
-//   CURRENTLY_READING
-//   FINISHED_READING
-//   COULDNT_FINISH
-// }
-
 const ChangeStatus: React.FC<ChangeStatusProps> = ({
   readingStatus,
 }) => {
