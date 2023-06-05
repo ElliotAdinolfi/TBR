@@ -82,9 +82,11 @@ const BookInfo = async ({ params }) => {
             </div>
             <hr />
             <p className="my-4">
-              {bookData.description.length < 500
-                ? bookData.description
-                : bookData.description.substring(0, 500) + '...'}
+              {bookData.description !== null
+                ? bookData.description.length < 500
+                  ? bookData.description
+                  : bookData.description.substring(0, 500) + '...'
+                : null}
             </p>
           </div>
           <div></div>
